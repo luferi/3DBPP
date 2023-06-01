@@ -169,11 +169,11 @@ def sample_generator(freq_table, communities_flat, cluster_dist):
 
 if __name__ == '__main__':
 
-    # Operation in off-line mode
+    # Operation in off-line mode, please replace the file paths
     main_workflow(r"path to to original dataset\Dataset1000.csv", 100, r"path to to new dataset\NewDS.csv")
 
 
-    # Operation in on-line mode
+    # Operation in on-line mode, please replace the file paths
     df = load_dataset(r"path to to original dataset\Dataset1000.csv")
     freq_table = df.groupby(['Order', 'Product']).agg({'Quantity': 'sum'}).unstack(fill_value=0)
     communities_flat = cosine_similarity_community_clustering(freq_table, threshold=100)
