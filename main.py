@@ -9,10 +9,10 @@ import random
 def load_dataset(file_path):
     df = pd.read_csv(file_path, sep=',', dtype=str,
                      usecols=['Order', 'Product', 'Quantity', 'Length', 'Width',
-                              'Height', 'Volume', 'Weight'])
+                              'Height', 'Weight'])
     df[['Quantity', 'Length', 'Width', 'Height']] = df[
         ['Quantity', 'Length', 'Width', 'Height']].astype(int)
-    df[['Volume', 'Weight']] = df[['Volume', 'Weight']].astype(float)
+    df[['Weight']] = df[['Weight']].astype(float)
     return df
 
 
@@ -125,7 +125,6 @@ def create_new_dataset(new_df, original_df, values_dict):
             'Length': matching_row['Length'],
             'Width': matching_row['Width'],
             'Height': matching_row['Height'],
-            'Volume': matching_row['Volume'],
             'Weight': matching_row['Weight']
         }
 
@@ -170,7 +169,9 @@ def sample_generator(freq_table, communities_flat, cluster_dist):
 
 if __name__ == '__main__':
 
-    df = load_dataset(r"Set the path here\Dataset1000_gen1.csv")
+    main_workflow(r"C:\LDRstuff\Private\MyDevel\FLAP\DataSetPublic\Dataset1000.csv", 100, r"C:\LDRstuff\Private\MyDevel\FLAP\DataSetPublic\NewDS.csv")
+
+    df = load_dataset(r"C:\LDRstuff\Private\MyDevel\FLAP\DataSetPublic\Dataset1000.csv")
     freq_table = df.groupby(['Order', 'Product']).agg({'Quantity': 'sum'}).unstack(fill_value=0)
     communities_flat = cosine_similarity_community_clustering(freq_table, threshold=100)
     cluster_dist = cluster_distribution(communities_flat, len(df))
